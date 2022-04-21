@@ -1,12 +1,19 @@
-const express = require('express');
+const express = require("express");
+const serverless = require("serverless-http");
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(express.bodyParser());
+const router = express.Router();
 
-app.post('/ussd', (req, res) => {
+router.get("/", (req, res) => {
+  res.json({
+    hello: "hi!"
+  });
+});
+
+router.post('/ussd', (req, res) => {
   const {
         sessionId,
         serviceCode,
@@ -41,4 +48,7 @@ console.log(req.body)
     res.send(response);
 })
 
-app.listen(2222, () => console.log('Server started'));
+app.use(`/.netlify/functions/api`, router);
+
+module.exports = app;
+module.exports.handler = serverless(app);
