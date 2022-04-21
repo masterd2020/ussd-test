@@ -21,7 +21,7 @@ router.post('/ussd', (req, res) => {
         text,
     } = req.body;
 console.log(req.body)
-    let response = 'hello world';
+    let response = '';
 
     if (text == '') {
         // This is the first request. Note how we start the response with CON
